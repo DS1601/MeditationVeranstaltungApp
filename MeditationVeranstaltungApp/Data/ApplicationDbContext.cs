@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace MeditationVeranstaltungApp.Data
 {
-    public partial class ApplicationDbContext : IdentityDbContext
+    public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public virtual DbSet<Kontakt> Kontakts { get; set; } = null!;
+        public virtual DbSet<ApplicationUser> Users { get; set; } = null!;
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -37,10 +39,10 @@ namespace MeditationVeranstaltungApp.Data
                 }
             );
 
-            var hasher = new PasswordHasher<IdentityUser>();
+            var hasher = new PasswordHasher<ApplicationUser>();
 
-            modelBuilder.Entity<IdentityUser>().HasData(
-                new IdentityUser
+            modelBuilder.Entity<ApplicationUser>().HasData(
+                new ApplicationUser
                 {
                     Id = "ec673be3-bdfe-4ee6-9ff1-3712a38acb5e",
                     Email = "admin@web.de",
@@ -59,6 +61,10 @@ namespace MeditationVeranstaltungApp.Data
                 }
             );
 
+            modelBuilder.Entity<ApplicationUser>()
+            .HasOne(e => e.Kontakt)
+            .WithOne(e => e.User)
+            .HasForeignKey<Kontakt>("UserId");
 
             OnModelCreatingPartial(modelBuilder);
         }

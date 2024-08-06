@@ -19,5 +19,7 @@ namespace MeditationVeranstaltungApp.Data
         public string Telefon { get; set; }
         public string Stadt { get; set; }
         public string Land { get; set; }
+        public string UserId { get; set; }
+        public virtual ApplicationUser? User { get; set; }
     }
 }
