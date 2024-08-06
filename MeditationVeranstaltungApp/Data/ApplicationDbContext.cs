@@ -8,6 +8,7 @@ namespace MeditationVeranstaltungApp.Data
     public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public virtual DbSet<Kontakt> Kontakts { get; set; } = null!;
+        public virtual DbSet<ReiseInfo> ReiseInfos { get; set; } = null!;
         public virtual DbSet<ApplicationUser> Users { get; set; } = null!;
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -65,6 +66,17 @@ namespace MeditationVeranstaltungApp.Data
             .HasOne(e => e.Kontakt)
             .WithOne(e => e.User)
             .HasForeignKey<Kontakt>("UserId");
+
+            modelBuilder.Entity<ReiseInfo>()
+            .HasOne(e => e.User)
+            .WithMany(e => e.ReiseInfos)
+            .HasForeignKey(e => e.UserId)
+            .IsRequired();
+
+            modelBuilder.Entity<ReiseInfo>()
+            .HasOne(e => e.Fahrer)
+            .WithMany(e => e.PickUps)
+            .HasForeignKey(e => e.FahrerId);
 
             OnModelCreatingPartial(modelBuilder);
         }
