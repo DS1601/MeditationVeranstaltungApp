@@ -6,6 +6,7 @@ namespace MeditationVeranstaltungApp.Data
 {
     public partial class ApplicationDbContext : IdentityDbContext
     {
+        public virtual DbSet<Kontakt> Kontakts { get; set; } = null!;
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
