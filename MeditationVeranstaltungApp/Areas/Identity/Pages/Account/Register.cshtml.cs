@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using MeditationVeranstaltungApp.Shared;
 
 namespace MeditationVeranstaltungApp.Areas.Identity.Pages.Account
 {
@@ -89,6 +90,14 @@ namespace MeditationVeranstaltungApp.Areas.Identity.Pages.Account
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
+            //public Kontakt Kontakt { get; set; }
+
+            public Anrede Anrede { get; set; }
+            public string Vorname { get; set; }
+            public string Nachname { get; set; }
+            public string Telefon { get; set; }
+            public string Stadt { get; set; }
+            public string Land { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -114,6 +123,17 @@ namespace MeditationVeranstaltungApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                user.Kontakt = new Kontakt
+                {
+                    Anrede = Input.Anrede,
+                    Vorname = Input.Vorname,
+                    Nachname = Input.Nachname,
+                    Email = Input.Email,
+                    Telefon = Input.Telefon,
+                    Stadt = Input.Stadt,
+                    Land = Input.Land,
+                };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
