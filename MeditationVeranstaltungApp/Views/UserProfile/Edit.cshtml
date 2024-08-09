@@ -6,12 +6,46 @@
 
 <div class="container pt-3 pb-3">
     <div class="d-flex justify-content-between">
-        <h3>@Html.LabelFor(m => m.Vorname)</h3>
-        @{
-            <form asp-action="ChangePassword">
-                <button type="submit" class="btn btn-primary">Passwort änderen</button>
-            </form>
-        }
+        <h3>User Kontakt Info</h3>
+
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#PasswortAenderenModal">Passwort änderen</button>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="PasswortAenderenModal" tabindex="-1" aria-labelledby="PasswortAenderenModal" aria-hidden="true">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <form asp-action="ChangePassword" class="d-flex flex-column p-3 gap-3">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="PasswortAenderenModal">Passwort ändern</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div class="flex-fill">
+                                <label for="altesPasswort" class="form-label">Altes Passwort:</label>
+                                <input type="password" class="form-control" #altesPasswort id="altesPasswort" name="altesPasswort">
+                            </div>
+                            
+
+                            <div class="flex-fill">
+                                <label for="neuesPasswort" class="form-label">Neues Passwort:</label>
+                                <input type="password" class="form-control" #neuesPasswort id="neuesPasswort" name="neuesPasswort">
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                            <button type="submit" class="btn btn-danger">Passwort ändern</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 
     </div>

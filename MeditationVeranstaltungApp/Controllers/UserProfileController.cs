@@ -1,13 +1,11 @@
 using AutoMapper;
 using MeditationVeranstaltungApp.Data;
 using MeditationVeranstaltungApp.Models;
-using MeditationVeranstaltungApp.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using NuGet.Packaging.Signing;
-using System.Diagnostics;
+
 
 namespace MeditationVeranstaltungApp.Controllers
 {
@@ -16,10 +14,20 @@ namespace MeditationVeranstaltungApp.Controllers
         private readonly ILogger<UserProfileController> _logger;
         private readonly IMapper mapper;
         private readonly ApplicationDbContext context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public UserProfileController(ILogger<UserProfileController> logger, IMapper mapper, ApplicationDbContext context)
+        public UserProfileController(
+            ILogger<UserProfileController> logger,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IMapper mapper,
+            ApplicationDbContext context
+            )
         {
             _logger = logger;
+            _userManager = userManager;
+            this._signInManager = signInManager;
             this.mapper = mapper;
             this.context = context;
         }
@@ -47,6 +55,15 @@ namespace MeditationVeranstaltungApp.Controllers
             if (user.Kontakt != null)
             {
                 kontaktModel = mapper.Map<KontaktModel>(user.Kontakt);
+                kontaktModel.UserId = id;
+            }
+            else
+            {
+                kontaktModel = new KontaktModel
+                {
+                    UserId = id
+                };
+
             }
 
             return View("Edit", kontaktModel);
@@ -80,5 +97,40 @@ namespace MeditationVeranstaltungApp.Controllers
 
         }
 
+        public async Task<ActionResult> ChangePassword(string altesPasswort, string neuesPasswort)
+        {
+            if (altesPasswort != null && neuesPasswort != null)
+            {
+
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                }
+
+                var changePasswordResult = await _userManager.ChangePasswordAsync(user, altesPasswort, neuesPasswort);
+                if (!changePasswordResult.Succeeded)
+                {
+                    foreach (var error in changePasswordResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return RedirectToAction("Error", "sshshss shhshs");
+                }
+
+                await _signInManager.RefreshSignInAsync(user);
+                _logger.LogInformation("User changed their password successfully.");
+                return RedirectToAction("ChangePasswordConfirmation");
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        public IActionResult ChangePasswordConfirmation()
+        {
+            return View();
+        }
     }
 }
