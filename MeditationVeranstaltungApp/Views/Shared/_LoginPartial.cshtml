@@ -13,7 +13,7 @@
         if (User.IsInRole("Admin")) { buchungTxt = "Alle Buchungen"; }
         <li>
             <div class="dropdown">
-                <a class="btn border-0  dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="btn border-0 shadow-none dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     @if(kontakt != null)
                     {
                         @(kontakt.Vorname + " " + kontakt.Nachname)
