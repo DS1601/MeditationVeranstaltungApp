@@ -1,27 +1,63 @@
 ﻿@using MeditationVeranstaltungApp.Data
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject ApplicationDbContext applicationDbContext
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var kontakt = applicationDbContext.Users.Include(u => u.Kontakt).FirstOrDefault(user => user.UserName == User.Identity.Name).Kontakt;
+        var buchungTxt = "Meine Buchungen";
+        if (User.IsInRole("Admin")) { buchungTxt = "Alle Buchungen"; }
+        <li>
+            <div class="dropdown">
+                <a class="btn border-0  dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    @if(kontakt != null)
+                    {
+                        @(kontakt.Vorname + " " + kontakt.Nachname)
+                    }else{
+                        @User.Identity?.Name
+                    }
+                    
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="ReiseInfo" asp-action="Index">@buchungTxt</a>
+                    </li>
+
+                    @if (User.IsInRole("Admin")){
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="UserInfo" asp-action="Index">Alle Benutzer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FahrerInfo" asp-action="Index">Alle Fahrer</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="UserInfo" asp-action="Index">Meine Profile</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    }
+    else
+    {
+        @* <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li> *@
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Anmelden</a>
+        </li>
+    }
 </ul>
