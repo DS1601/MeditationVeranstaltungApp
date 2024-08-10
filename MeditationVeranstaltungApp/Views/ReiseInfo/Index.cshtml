@@ -1,0 +1,65 @@
+﻿@using MeditationVeranstaltungApp.Data
+@{
+    ViewData["Title"] = "Gast Info";
+}
+
+<div class="container pt-3 pb-3">
+    <div class="d-flex justify-content-between">
+        
+        @{
+            if (User.IsInRole("User"))
+            {
+                <h3>Meine Buchungen</h3>
+                <form asp-action="CreateEditGastInfo">
+                    <button type="submit" class="btn btn-primary">Neue Buchung</button>
+                </form>
+            }
+            else
+            {
+                <h3>Alle Buchungen</h3>
+            }
+        }
+
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Veranstalltung</th>
+                <th>Anzahl</th>
+                <th>Ankunft Info</th>
+                <th>Abfahrt Info</th>
+                <th>Kontakt</th>
+                <th>Fahrer</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                foreach (ReiseInfoListModel reiseInfo in ViewBag.ReiseInfos)
+                {
+                    <tr class="@((reiseInfo.istAbgesagt ? "table-danger" : ""))">
+                        <td>@reiseInfo.Veranstalltung</td>
+                        <td>@reiseInfo.Anzahl</td>
+                        <td>@reiseInfo.AnkunftInfo</td>
+                        <td>@reiseInfo.AbfahrtInfo</td>
+                        <td>@reiseInfo.Kontakt</td>
+                        <td>@reiseInfo.Fahrer</td>
+                        <td>
+
+                            <form asp-action="Details" method="get" asp-route-id="@reiseInfo.Id">
+                                <button type="submit" class="btn btn-info">Anzeigen</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+
+
+</div>

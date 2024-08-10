@@ -1,4 +1,5 @@
-﻿@using MeditationVeranstaltungApp.Data
+﻿@using MeditationVeranstaltungApp.Configurations
+@using MeditationVeranstaltungApp.Data
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -111,7 +112,7 @@
 
     <div class="d-flex p-3 ">
         <div class="p-3 text-center flex-fill">
-            <h2>Maditation Camp 2024</h2>
+            <h2>Maditation Camp 2024 (@Globals.Veranstalltung)</h2>
             <h4>06.08.2024 - 12.08.2024</h4>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum vitae repellendus ratione at perferendis earum sint quidem mollitia laboriosam laudantium, accusantium facere, quos molestiae vel recusandae et quam dolores incidunt!</p>
             <div>
