@@ -6,6 +6,6 @@ namespace MeditationVeranstaltungApp.Data
     {
         public Kontakt? Kontakt { get; set; }
         public ICollection<ReiseInfo> ReiseInfos { get; set; }
-        public ICollection<ReiseInfo> PickUps { get; set; }
+        public ICollection<ReiseInfo> Tours { get; set; }
     }
 }

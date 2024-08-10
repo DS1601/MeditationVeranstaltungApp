@@ -75,7 +75,7 @@ namespace MeditationVeranstaltungApp.Data
 
             modelBuilder.Entity<ReiseInfo>()
             .HasOne(e => e.Fahrer)
-            .WithMany(e => e.PickUps)
+            .WithMany(e => e.Tours)
             .HasForeignKey(e => e.FahrerId);
 
             OnModelCreatingPartial(modelBuilder);
