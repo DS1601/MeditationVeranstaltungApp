@@ -1,0 +1,47 @@
+﻿@using MeditationVeranstaltungApp.Data
+@{
+    ViewData["Title"] = "Reise Info";
+}
+
+<div class="container pt-3 pb-3">
+    <div class="d-flex justify-content-between">
+
+        <h3>Alle Fahrer</h3>
+        <form asp-action="Create">
+            <button type="submit" class="btn btn-primary">Neue Fahrer</button>
+        </form>
+
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Anrede</th>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Stadt</th>
+                <th>Land</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                foreach (KontaktModel kontaktModel in ViewBag.KontaktModels)
+                {
+                    <tr>
+                        <td>@kontaktModel.Anrede</td>
+                        <td>@kontaktModel.Vorname</td>
+                        <td>@kontaktModel.Nachname</td>
+                        <td>@kontaktModel.Email</td>
+                        <td>@kontaktModel.Telefon</td>
+                        <td>@kontaktModel.Stadt</td>
+                        <td>@kontaktModel.Land</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>

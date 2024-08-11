@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using MeditationVeranstaltungApp.Data;
-using MeditationVeranstaltungApp.Data.Migrations;
 using MeditationVeranstaltungApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Packaging.Signing;
-using System;
 
 namespace MeditationVeranstaltungApp.Controllers
 {
@@ -68,21 +65,6 @@ namespace MeditationVeranstaltungApp.Controllers
             }
 
             var reiseInfoCreateEditModel = mapper.Map<ReiseInfoCreateEditModel>(reiseInfoAusDB);
-                
-            //    new ReiseInfoCreateEditModel
-            //{
-            //    Veranstalltung = reiseInfoAusDB.Veranstalltung,
-            //    AnzahlMaenner = reiseInfoAusDB.AnzahlMaenner,
-            //    AnzahlFrauen = gastInfoAusDB.AnzahlFrauen,
-            //    AnkunftAm = DateOnly.FromDateTime(gastInfoAusDB.AnkunftAm),
-            //    AnkunftUm = TimeOnly.FromDateTime(gastInfoAusDB.AnkunftAm),
-            //    AnkunftOrt = gastInfoAusDB.AnkunftOrt,
-            //    AbfahrtAm = DateOnly.FromDateTime(gastInfoAusDB.AbfahrtAm),
-            //    AbfahrtUm = TimeOnly.FromDateTime(gastInfoAusDB.AbfahrtAm),
-            //    AbfahrtOrt = gastInfoAusDB.AbfahrtOrt,
-            //    Notiz = gastInfoAusDB.Notiz,
-            //};
-
             return View("CreateEditReiseInfo", reiseInfoCreateEditModel);
         }
 
