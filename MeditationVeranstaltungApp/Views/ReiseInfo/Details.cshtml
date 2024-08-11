@@ -1,0 +1,182 @@
+﻿@using MeditationVeranstaltungApp.Data
+@using System.Security.Claims;
+@{
+    string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+    ViewData["Title"] = "Reise Info";
+    var reiseInfo = ViewBag.ReiseInfo;
+}
+
+
+<div class="container pt-3 pb-3">
+    <div class="p-4 text-center d-flex flex-column" style="gap:20px;min-height: 100vh;">
+
+        <h3>Buchung Info</h3>
+
+        <!-- item start -->
+
+
+        <div class="d-flex flex-column" style="position: relative;border: 1px dotted black; border-radius: 5px;">
+            <h5 style="background-color: white;position: absolute; top: -15px; left: 45%;">&nbsp;&nbsp;Travel Info&nbsp;&nbsp;</h5>
+
+            <div class="d-flex p-3 justify-content-between">
+                <div class="d-flex flex-column">
+                    <span><strong>Anzahl Männer</strong></span>
+                    <span>@reiseInfo.AnzahlMaenner<span>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span><strong>Anzahl Frauen</strong></span>
+                    <span>@reiseInfo.AnzahlFrauen<span>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span><strong>AnkunftAm</strong></span>
+                    <span>@reiseInfo.AnkunftAm</span>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span><strong>Ankuftsort</strong></span>
+                    <span>@reiseInfo.AnkunftOrt</span>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span><strong>AbfahrtAm</strong></span>
+                    <span>@reiseInfo.AbfahrtAm</span>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span><strong>Abfahrtsort</strong></span>
+                    <span>@reiseInfo.AbfahrtOrt</span>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column  p-3">
+                <span><strong>Notiz</strong></span>
+                <span>@reiseInfo.Notiz</span>
+            </div>
+
+
+
+        </div>
+
+        @{
+            if (reiseInfo.Kontakt != null)
+            {
+                <div class="d-flex p-3 justify-content-between" style="position: relative;border: 1px dotted black; border-radius: 5px;">
+                    <h5 style="background-color: white;position: absolute; top: -15px; left: 45%;">&nbsp;&nbsp;Kontakt Info&nbsp;&nbsp;</h5>
+
+
+                    <div class="d-flex flex-column">
+                        <span><strong>Name</strong></span>
+                        <span>@reiseInfo.Kontakt.Anrede @reiseInfo.Kontakt.Vorname @reiseInfo.Kontakt.Nachname</span>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <span><strong>E-Mail</strong></span>
+                        <span>@reiseInfo.Kontakt.Email</span>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <span><strong>Telefon</strong></span>
+                        <span>@reiseInfo.Kontakt.Telefon</span>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <span><strong>Stadt</strong></span>
+                        <span>@reiseInfo.Kontakt.Stadt (@reiseInfo.Kontakt.Land)</span>
+                    </div>
+
+
+                </div>
+            }
+
+            if (reiseInfo.Fahrer != null)
+            {
+                <div class="d-flex p-3 justify-content-between" style="position: relative;border: 1px dotted black; border-radius: 5px;">
+                    <h5 style="background-color: white;position: absolute; top: -15px; left: 45%;">&nbsp;&nbsp;Fahrer Info&nbsp;&nbsp;</h5>
+
+
+                    <div class="d-flex flex-column">
+                        <span><strong>Name</strong></span>
+                        <span>@reiseInfo.Fahrer.Anrede @reiseInfo.Fahrer.Vorname @reiseInfo.Fahrer.Nachname</span>
+                    </div>
+
+
+
+                    <div class="d-flex flex-column">
+                        <span><strong>E-Mail</strong></span>
+                        <span>@reiseInfo.Fahrer.Email</span>
+                    </div>
+
+
+                    <div class="d-flex flex-column">
+                        <span><strong>Telefon</strong></span>
+                        <span>@reiseInfo.Fahrer.Telefon</span>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <span><strong>Stadt</strong></span>
+                        <span>@reiseInfo.Fahrer.Stadt (@reiseInfo.Fahrer.Land)</span>
+                    </div>
+
+
+                </div>
+            }
+
+            if (reiseInfo.AbgesagtAm != null)
+            {
+                <div class="d-flex p-3 justify-content-between" style="position: relative;border: 1px dotted black; border-radius: 5px;">
+                    <h5 style="background-color: white;position: absolute; top: -15px; left: 45%;">&nbsp;&nbsp;Absage Info&nbsp;&nbsp;</h5>
+
+                    <div class="d-flex flex-column">
+                        <span><strong>AbgesagtAm</strong></span>
+                        <span>@reiseInfo.AbgesagtAm</span>
+                    </div>
+
+                    <div class="d-flex flex-column flex-grow-1">
+                        <span><strong>Grund</strong></span>
+                        <span>@reiseInfo.AbsageGrund<span>
+                    </div>
+
+                </div>
+
+            }
+        }
+
+
+
+        <!-- item end -->
+
+        <div class="d-flex p-2 justify-content-between">
+            <button type="button" class="btn btn-primary" onclick="history.back()">Zurück</button>
+            @{
+
+
+                if (reiseInfo.AbgesagtAm == null)
+                {
+                    if (reiseInfo.Kontakt.UserId == userId)
+                    {
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#absageBestaetigungModal">Absagen</button>
+
+                        <form asp-action="CreateEditGastInfo" asp-route-id="@reiseInfo.Id">
+                            <button type="submit" class="btn btn-warning">Editieren</button>
+                        </form>
+                    }
+                    if (User.IsInRole("Admin"))
+                    {
+
+                        <form asp-action="FahrerZuweisen" asp-route-id="@reiseInfo.Id">
+                            <button type="submit" class="btn btn-primary">Fahrer Zuweisen</button>
+                        </form>
+                    }
+                }
+            }
+
+        </div>
+
+
+
+
+    </div>
+
+</div>

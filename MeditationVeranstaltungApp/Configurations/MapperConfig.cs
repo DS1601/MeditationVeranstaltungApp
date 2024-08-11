@@ -21,6 +21,14 @@ namespace MeditationVeranstaltungApp.Configurations
                 .ForMember(q => q.istAbgesagt, d => d.MapFrom(map => map.AbgesagtAm !=null))
                 .ForMember(q => q.Kontakt, d => d.MapFrom(map => $"{map.User.Kontakt.Vorname} {map.User.Kontakt.Nachname}"))
                 .ForMember(q => q.Fahrer, d => d.MapFrom(map => $"{map.Fahrer.Kontakt.Vorname} {map.Fahrer.Kontakt.Nachname}"));
+
+            CreateMap<ReiseInfo, ReiseInfoDetailModel>()
+                .ForMember(q => q.AnkunftAm, d => d.MapFrom(map => DateOnly.FromDateTime(map.AnkunftAm)))
+                .ForMember(q => q.AnkunftUm, d => d.MapFrom(map => TimeOnly.FromDateTime(map.AnkunftAm)))
+                .ForMember(q => q.AbfahrtAm, d => d.MapFrom(map => DateOnly.FromDateTime(map.AbfahrtAm)))
+                .ForMember(q => q.AbfahrtUm, d => d.MapFrom(map => TimeOnly.FromDateTime(map.AbfahrtAm)))
+                .ForMember(q => q.Kontakt, d => d.MapFrom(map => map.User.Kontakt))
+                .ForMember(q => q.Fahrer, d => d.MapFrom(map => map.Fahrer.Kontakt));
         }
     }
 }

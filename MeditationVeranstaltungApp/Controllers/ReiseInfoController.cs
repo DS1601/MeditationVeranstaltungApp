@@ -239,19 +239,21 @@ namespace MeditationVeranstaltungApp.Controllers
                 return View();
             }
 
-            var gastInfoAusDB = context.ReiseInfos
+            var reiseInfoAusDB = context.ReiseInfos
                 .Include(g => g.User)
                 .Include(g => g.User.Kontakt)
                 .Include(g => g.Fahrer)
                 .Include(g => g.Fahrer.Kontakt)
                 .FirstOrDefault(g => g.Id == id);
 
-            if (gastInfoAusDB == null)
+            if (reiseInfoAusDB == null)
             {
                 return NotFound();
             }
 
-            ViewBag.GastInfo = gastInfoAusDB;
+            var reiseInfoDetailModel = mapper.Map<ReiseInfoDetailModel>(reiseInfoAusDB);
+
+            ViewBag.ReiseInfo = reiseInfoDetailModel;
             return View();
         }
     }
