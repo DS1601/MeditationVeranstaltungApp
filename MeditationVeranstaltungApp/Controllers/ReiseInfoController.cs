@@ -171,68 +171,68 @@ namespace MeditationVeranstaltungApp.Controllers
         //    }
 
 
-        //}
-        //public IActionResult Absage(AbsageModel absageModel)
-        //{
-        //    var gastInfo = context.GastInfos.FirstOrDefault(g => g.Id == absageModel.Id);
-        //    gastInfo.AbgesagtAm = DateTime.Now;
-        //    gastInfo.AbsageGrund = absageModel.AbsageGrund;
+//    }
+    public IActionResult Absage(int id, string? AbsageGrund)
+    {
+        var gastInfo = context.ReiseInfos.FirstOrDefault(g => g.Id == id);
+        gastInfo.AbgesagtAm = DateTime.Now;
+        gastInfo.AbsageGrund = AbsageGrund;
 
-        //    context.GastInfos.Update(gastInfo);
-        //    context.Entry(gastInfo).State = EntityState.Modified;
-        //    context.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        context.ReiseInfos.Update(gastInfo);
+        context.Entry(gastInfo).State = EntityState.Modified;
+        context.SaveChanges();
+        return RedirectToAction("Index");
+    }
 
-        //public IActionResult FahrerZuweisen(int id)
-        //{
-        //    var fahrerZuweisenModel = new FahrerZuweisenModel
-        //    {
-        //        gastInfoId = id
-        //    };
-        //    return View("FahrerZuweisen", fahrerZuweisenModel);
-        //}
+    //public IActionResult FahrerZuweisen(int id)
+    //{
+    //    var fahrerZuweisenModel = new FahrerZuweisenModel
+    //    {
+    //        gastInfoId = id
+    //    };
+    //    return View("FahrerZuweisen", fahrerZuweisenModel);
+    //}
 
-        //public IActionResult FahrerZuweisenSubmit(FahrerZuweisenModel fahrerZuweisenModel)
-        //{
-        //    var gastInfoAusDB = context.GastInfos.FirstOrDefault(g => g.Id == fahrerZuweisenModel.gastInfoId);
+    //public IActionResult FahrerZuweisenSubmit(FahrerZuweisenModel fahrerZuweisenModel)
+    //{
+    //    var gastInfoAusDB = context.GastInfos.FirstOrDefault(g => g.Id == fahrerZuweisenModel.gastInfoId);
 
-        //    var fahrerKontakt = context.Kontakts
-        //        .Where(k => k.Vorname == fahrerZuweisenModel.Vorname &&
-        //        k.Nachname == fahrerZuweisenModel.Nachname &&
-        //        k.Telefon == fahrerZuweisenModel.Telefon &&
-        //        k.Stadt == fahrerZuweisenModel.Stadt &&
-        //        k.Land == fahrerZuweisenModel.Land
-        //        ).FirstOrDefault();
+    //    var fahrerKontakt = context.Kontakts
+    //        .Where(k => k.Vorname == fahrerZuweisenModel.Vorname &&
+    //        k.Nachname == fahrerZuweisenModel.Nachname &&
+    //        k.Telefon == fahrerZuweisenModel.Telefon &&
+    //        k.Stadt == fahrerZuweisenModel.Stadt &&
+    //        k.Land == fahrerZuweisenModel.Land
+    //        ).FirstOrDefault();
 
-        //    if (fahrerKontakt != null)
-        //    {
-        //        gastInfoAusDB.FahrerKontaktId = fahrerKontakt.Id;
-        //        gastInfoAusDB.FahrerKontakt = fahrerKontakt;
-        //    }
-        //    else
-        //    {
-        //        gastInfoAusDB.FahrerKontakt = new Kontakt
-        //        {
-        //            Anrede = fahrerZuweisenModel.Anrede,
-        //            Vorname = fahrerZuweisenModel.Vorname,
-        //            Nachname = fahrerZuweisenModel.Nachname,
-        //            Geschlecht = fahrerZuweisenModel.Geschlecht,
-        //            Email = fahrerZuweisenModel.Email,
-        //            Telefon = fahrerZuweisenModel.Telefon,
-        //            Stadt = fahrerZuweisenModel.Stadt,
-        //            Land = fahrerZuweisenModel.Land,
-        //        };
+    //    if (fahrerKontakt != null)
+    //    {
+    //        gastInfoAusDB.FahrerKontaktId = fahrerKontakt.Id;
+    //        gastInfoAusDB.FahrerKontakt = fahrerKontakt;
+    //    }
+    //    else
+    //    {
+    //        gastInfoAusDB.FahrerKontakt = new Kontakt
+    //        {
+    //            Anrede = fahrerZuweisenModel.Anrede,
+    //            Vorname = fahrerZuweisenModel.Vorname,
+    //            Nachname = fahrerZuweisenModel.Nachname,
+    //            Geschlecht = fahrerZuweisenModel.Geschlecht,
+    //            Email = fahrerZuweisenModel.Email,
+    //            Telefon = fahrerZuweisenModel.Telefon,
+    //            Stadt = fahrerZuweisenModel.Stadt,
+    //            Land = fahrerZuweisenModel.Land,
+    //        };
 
-        //    }
+    //    }
 
 
-        //    context.Entry(gastInfoAusDB).State = EntityState.Modified;
-        //    context.SaveChanges();
-        //    return RedirectToAction("Details", gastInfoAusDB);
-        //}
+    //    context.Entry(gastInfoAusDB).State = EntityState.Modified;
+    //    context.SaveChanges();
+    //    return RedirectToAction("Details", gastInfoAusDB);
+    //}
 
-        public IActionResult Details(int id)
+    public IActionResult Details(int id)
         {
             if (id == 0)
             {
