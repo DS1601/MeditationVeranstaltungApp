@@ -28,10 +28,10 @@ namespace MeditationVeranstaltungApp.Controllers
         public IActionResult Index()
         {
             var query = context.ReiseInfos
-                .Include(g => g.User)
-                .Include(g => g.User.Kontakt)
-                .Include(g => g.Fahrer)
-                .Include(g => g.Fahrer.Kontakt);
+                .Include(r => r.User)
+                .Include(r => r.User.Kontakt)
+                .Include(r => r.Fahrer)
+                .Include(r => r.Fahrer.Kontakt);
 
             var reiseInfos = new List<ReiseInfo>();
             if (User.IsInRole("Admin"))
@@ -117,65 +117,33 @@ namespace MeditationVeranstaltungApp.Controllers
         }
         public IActionResult Absage(int id, string? AbsageGrund)
         {
-            var gastInfo = context.ReiseInfos.FirstOrDefault(g => g.Id == id);
-            gastInfo.AbgesagtAm = DateTime.Now;
-            gastInfo.AbsageGrund = AbsageGrund;
+            var reiseInfo = context.ReiseInfos.FirstOrDefault(r => r.Id == id);
+            reiseInfo.AbgesagtAm = DateTime.Now;
+            reiseInfo.AbsageGrund = AbsageGrund;
 
-            context.ReiseInfos.Update(gastInfo);
-            context.Entry(gastInfo).State = EntityState.Modified;
+            context.ReiseInfos.Update(reiseInfo);
+            context.Entry(reiseInfo).State = EntityState.Modified;
             context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        //public IActionResult FahrerZuweisen(int id)
-        //{
-        //    var fahrerZuweisenModel = new FahrerZuweisenModel
-        //    {
-        //        gastInfoId = id
-        //    };
-        //    return View("FahrerZuweisen", fahrerZuweisenModel);
-        //}
+        public async Task<IActionResult> FahrerZuweisenSubmit(int id, string FahrerId)
+        {
+            var reiseInfoAusDB = context.ReiseInfos.FirstOrDefault(r => r.Id == id);
+            if (reiseInfoAusDB == null) { return BadRequest(); }
+            reiseInfoAusDB.FahrerId = FahrerId;
+            context.Entry(reiseInfoAusDB).State = EntityState.Modified;
+            context.SaveChanges();
 
-        //public IActionResult FahrerZuweisenSubmit(FahrerZuweisenModel fahrerZuweisenModel)
-        //{
-        //    var gastInfoAusDB = context.GastInfos.FirstOrDefault(g => g.Id == fahrerZuweisenModel.gastInfoId);
+            var reiseInfoDetailModel = mapper.Map<ReiseInfoDetailModel>(reiseInfoAusDB);
 
-        //    var fahrerKontakt = context.Kontakts
-        //        .Where(k => k.Vorname == fahrerZuweisenModel.Vorname &&
-        //        k.Nachname == fahrerZuweisenModel.Nachname &&
-        //        k.Telefon == fahrerZuweisenModel.Telefon &&
-        //        k.Stadt == fahrerZuweisenModel.Stadt &&
-        //        k.Land == fahrerZuweisenModel.Land
-        //        ).FirstOrDefault();
+            reiseInfoDetailModel.alleFahrer = await getAlleFahrer();
 
-        //    if (fahrerKontakt != null)
-        //    {
-        //        gastInfoAusDB.FahrerKontaktId = fahrerKontakt.Id;
-        //        gastInfoAusDB.FahrerKontakt = fahrerKontakt;
-        //    }
-        //    else
-        //    {
-        //        gastInfoAusDB.FahrerKontakt = new Kontakt
-        //        {
-        //            Anrede = fahrerZuweisenModel.Anrede,
-        //            Vorname = fahrerZuweisenModel.Vorname,
-        //            Nachname = fahrerZuweisenModel.Nachname,
-        //            Geschlecht = fahrerZuweisenModel.Geschlecht,
-        //            Email = fahrerZuweisenModel.Email,
-        //            Telefon = fahrerZuweisenModel.Telefon,
-        //            Stadt = fahrerZuweisenModel.Stadt,
-        //            Land = fahrerZuweisenModel.Land,
-        //        };
+            return RedirectToAction("Details", reiseInfoDetailModel);
 
-        //    }
+        }
 
-
-        //    context.Entry(gastInfoAusDB).State = EntityState.Modified;
-        //    context.SaveChanges();
-        //    return RedirectToAction("Details", gastInfoAusDB);
-        //}
-
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == 0)
             {
@@ -183,11 +151,11 @@ namespace MeditationVeranstaltungApp.Controllers
             }
 
             var reiseInfoAusDB = context.ReiseInfos
-                .Include(g => g.User)
-                .Include(g => g.User.Kontakt)
-                .Include(g => g.Fahrer)
-                .Include(g => g.Fahrer.Kontakt)
-                .FirstOrDefault(g => g.Id == id);
+                .Include(r => r.User)
+                .Include(r => r.User.Kontakt)
+                .Include(r => r.Fahrer)
+                .Include(r => r.Fahrer.Kontakt)
+                .FirstOrDefault(r => r.Id == id);
 
             if (reiseInfoAusDB == null)
             {
@@ -196,8 +164,24 @@ namespace MeditationVeranstaltungApp.Controllers
 
             var reiseInfoDetailModel = mapper.Map<ReiseInfoDetailModel>(reiseInfoAusDB);
 
+            reiseInfoDetailModel.alleFahrer = await getAlleFahrer();
+
             ViewBag.ReiseInfo = reiseInfoDetailModel;
             return View();
+        }
+
+        private async Task<List<KontaktModel>> getAlleFahrer()
+        {
+            string roleName = "DRIVER";
+
+            var users = await userManager.GetUsersInRoleAsync(roleName) as List<ApplicationUser>;
+            var ids = users.Select(user => user.Id);
+
+            List<Kontakt> kontakts = context.Kontakts
+            .Where(e => ids.Contains(e.UserId))
+            .ToList();
+
+            return mapper.Map<List<Kontakt>, List<KontaktModel>>(kontakts);
         }
     }
 }

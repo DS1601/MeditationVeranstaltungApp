@@ -171,12 +171,12 @@
                                         </div>
                                         <div class="modal-body">
                                             <h5>Schade, dass Sie nicht mitmachen wollen!</h5>
-                                  
+
                                             <div class="d-flex flex-fill mt-1" style="gap:20px;">
                                                 <input hidden type="number" min="0" class="form-control" value="@reiseInfo.Id" id="Id" name="Id">
                                                 <div class="flex-fill">
                                                     <label for="AbsageGrund" class="form-label">Teilen Sie bitte den Grund mit!</label>
-                                                    <textarea  rows="4" class="form-control" id="AbsageGrund" name="AbsageGrund"> </textarea>
+                                                    <textarea rows="4" class="form-control" id="AbsageGrund" name="AbsageGrund"> </textarea>
                                                 </div>
 
 
@@ -198,10 +198,47 @@
                     }
                     if (User.IsInRole("Admin"))
                     {
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#FahrerZuweisen">Fahrer zuweisen</button>
 
-                        <form asp-action="FahrerZuweisen" asp-route-id="@reiseInfo.Id">
-                            <button type="submit" class="btn btn-primary">Fahrer Zuweisen</button>
-                        </form>
+                        <!-- Modal -->
+                        <div class="modal fade" id="FahrerZuweisen" tabindex="-1" aria-labelledby="FahrerZuweisenModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <form asp-action="FahrerZuweisenSubmit" class="d-flex flex-column p-3 gap-3">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="FahrerZuweisenModalLabel">Fahrer zuweisen</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>Wählen Sie einen Fahrer aus!</h5>
+
+                                            <div class="d-flex flex-fill mt-1" style="gap:20px;">
+                                                <input hidden type="number" min="0" class="form-control" value="@reiseInfo.Id" id="Id" name="Id">
+                                                <div class="flex-fill">
+                                                    <select class="form-select" id="FahrerId" name="FahrerId">
+                                                        @{
+                                                            foreach (KontaktModel fahrer in reiseInfo.alleFahrer)
+                                                            {
+                                                                <option value="@fahrer.UserId">@fahrer.Vorname @fahrer.Nachname (@fahrer.Stadt) </option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                                            <button type="submit" class="btn btn-danger">Speichern</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                     }
                 }
             }

@@ -26,5 +26,6 @@ namespace MeditationVeranstaltungApp.Models
         public string? AbsageGrund { get; set; }
         public KontaktModel Kontakt { get; set; }
         public KontaktModel Fahrer { get; set; }
+        public List<KontaktModel> alleFahrer { get; set; } = new List<KontaktModel>();
     }
 }
