@@ -38,6 +38,11 @@ namespace MeditationVeranstaltungApp.Controllers
             {
                 reiseInfos = query.ToList();
             }
+            else if (User.IsInRole("Driver"))
+            {
+                var userId = userManager.GetUserId(HttpContext.User);
+                reiseInfos = query.Where(g => g.FahrerId == userId).ToList();
+            }
             else
             {
                 var userId = userManager.GetUserId(HttpContext.User);

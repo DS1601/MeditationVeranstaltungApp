@@ -32,8 +32,19 @@ namespace MeditationVeranstaltungApp.Controllers
             this.context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            string roleName = "User";
+
+            var users = await _userManager.GetUsersInRoleAsync(roleName) as List<ApplicationUser>;
+            var ids = users.Select(user => user.Id);
+
+            List<Kontakt> kontakts = context.Kontakts
+            .Where(e => ids.Contains(e.UserId))
+            .ToList();
+            var kontaktModels = mapper.Map<List<Kontakt>, List<KontaktModel>>(kontakts);
+
+            ViewBag.KontaktModels = kontaktModels;
             return View();
         }
 

@@ -10,7 +10,7 @@
     {
         var user = applicationDbContext.Users.Include(u => u.Kontakt).FirstOrDefault(user => user.UserName == User.Identity.Name);
         var buchungTxt = "Meine Buchungen";
-        if (User.IsInRole("Admin")) { buchungTxt = "Alle Buchungen"; }
+        if (User.IsInRole("Admin")) { buchungTxt = "Alle Buchungen"; } else if (User.IsInRole("Driver")) { buchungTxt = "Meine Touren"; }
         <li>
             <div class="dropdown">
                 <a class="btn border-0 shadow-none dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -33,7 +33,7 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="UserInfo" asp-action="Index">Alle Benutzer</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="UserProfile" asp-action="Index">Alle Benutzer</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="FahrerInfo" asp-action="Index">Alle Fahrer</a>
@@ -56,9 +56,6 @@
     }
     else
     {
-        @* <li class="nav-item">
-    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li> *@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Anmelden</a>
         </li>
