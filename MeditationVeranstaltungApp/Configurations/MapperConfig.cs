@@ -16,8 +16,8 @@ namespace MeditationVeranstaltungApp.Configurations
 
             CreateMap<ReiseInfo, ReiseInfoListModel>()
                 .ForMember(q => q.Anzahl, d => d.MapFrom(map => map.AnzahlMaenner + map.AnzahlFrauen))
-                .ForMember(q => q.AnkunftInfo, d => d.MapFrom(map => $"{map.AnkunftAm} ({map.AnkunftOrt})"))
-                .ForMember(q => q.AbfahrtInfo, d => d.MapFrom(map => $"{map.AbfahrtAm} ({map.AbfahrtOrt})"))
+                .ForMember(q => q.AnkunftInfo, d => d.MapFrom(map => $"{map.AnkunftAm.ToString("dd.MM.yyyy  HH:mm")} ({map.AnkunftOrt})"))
+                .ForMember(q => q.AbfahrtInfo, d => d.MapFrom(map => $"{map.AbfahrtAm.ToString("dd.MM.yyyy  HH:mm")} ({map.AbfahrtOrt})"))
                 .ForMember(q => q.istAbgesagt, d => d.MapFrom(map => map.AbgesagtAm !=null))
                 .ForMember(q => q.Kontakt, d => d.MapFrom(map => $"{map.User.Kontakt.Vorname} {map.User.Kontakt.Nachname}"))
                 .ForMember(q => q.Fahrer, d => d.MapFrom(map => $"{map.Fahrer.Kontakt.Vorname} {map.Fahrer.Kontakt.Nachname}"));
