@@ -8,20 +8,19 @@
 
 
 <div class="container pt-3 pb-3">
+
+    @{
+        if (User.IsInRole("Driver"))
+        {
+            <h3 class="p-4 ">Tour Info</h3>
+        }
+        else
+        {
+            <h3 class="ps-4 pe-4 ">Buchung Info</h3>
+        }
+    }
     <div class="p-4 text-center d-flex flex-column" style="gap:20px;min-height: 100vh;">
 
-
-        @{
-            if (User.IsInRole("Driver"))
-            {
-                <h3>Tour Info</h3>
-            }
-            else
-            {
-                <h3>Buchung Info</h3>
-            }
-        }
-        
         <!-- item start -->
 
 
