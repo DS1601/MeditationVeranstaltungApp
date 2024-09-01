@@ -1,5 +1,5 @@
 ﻿@model ReiseInfoCreateEditModel
-
+@using MeditationVeranstaltungApp.Configurations
 @{
     ViewData["Title"] = "Reise Info";
 }
@@ -29,7 +29,7 @@
 
                 <div class="flex-fill">
                     <label for="AnkunftAm" class="form-label">AnkunftAm:</label>
-                    <input type="date" class="form-control" asp-for="AnkunftAm" id="AnkunftAm" name="AnkunftAm">
+                    <input type="date" min="@Globals.start.ToString("yyyy-MM-dd")" max="@Globals.end.ToString("yyyy-MM-dd")" class="form-control" asp-for="AnkunftAm" id="AnkunftAm" name="AnkunftAm">
                 </div>
 
                 <div class="flex-fill">
@@ -54,7 +54,7 @@
 
                 <div class="flex-fill">
                     <label for="AbfahrtAm" class="form-label">AbfahrtAm:</label>
-                    <input type="date" class="form-control" asp-for="AbfahrtAm" id="AbfahrtAm" name="AbfahrtAm">
+                    <input type="date" min="@Globals.start.ToString("yyyy-MM-dd")" max="@Globals.end.ToString("yyyy-MM-dd")" class="form-control" asp-for="AbfahrtAm" id="AbfahrtAm" name="AbfahrtAm">
                 </div>
 
                 <div class="flex-fill">

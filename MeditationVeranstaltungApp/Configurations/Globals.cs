@@ -8,6 +8,8 @@ namespace MeditationVeranstaltungApp.Configurations
 {
     public static class Globals
     {
-        public static string Veranstalltung = "SAS2024HH";
+        public static string Veranstalltung = "MV24HH";
+        public static DateOnly start = new DateOnly(2024, 12, 24);
+        public static DateOnly end = new DateOnly(2024, 12, 29);
     }
 }
