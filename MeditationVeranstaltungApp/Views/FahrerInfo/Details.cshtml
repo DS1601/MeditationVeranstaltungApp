@@ -1,0 +1,85 @@
+﻿@using MeditationVeranstaltungApp.Data
+@using System.Security.Claims;
+@{
+    ViewData["Title"] = "Fahrer Info";
+    var fahrerInfo = ViewBag.FahrerInfo;
+}
+
+
+<div class="container pt-3 pb-3">
+    <h3>Fahrer Info</h3>
+
+    <div class="pt-4 pb-4 text-center d-flex flex-column" style="gap:20px;min-height: 100vh;">
+
+        <!-- item start -->
+
+                <div class="d-flex p-3 justify-content-between" style="position: relative;border: 1px dotted black; border-radius: 5px;">
+                    <h5 style="background-color: white;position: absolute; top: -15px; left: 45%;">&nbsp;&nbsp;Kontakt Info&nbsp;&nbsp;</h5>
+
+
+                    <div class="d-flex flex-column">
+                        <span><strong>Name</strong></span>
+                        <span>@fahrerInfo.Anrede @fahrerInfo.Vorname @fahrerInfo.Nachname</span>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <span><strong>E-Mail</strong></span>
+                        <span>@fahrerInfo.Email</span>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <span><strong>Telefon</strong></span>
+                        <span>@fahrerInfo.Telefon</span>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <span><strong>Stadt</strong></span>
+                        <span>@fahrerInfo.Stadt (@fahrerInfo.Land)</span>
+                    </div>
+
+
+                </div>
+           
+        <!-- item end -->
+
+        <div class="d-flex p-2 justify-content-between">
+            <button type="button" class="btn btn-primary" onclick="history.back()">Zurück</button>
+            @{
+                if (User.IsInRole("Admin"))
+                {
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#fahrerDeaktivierenModal">Deaktivieren</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="fahrerDeaktivierenModal" tabindex="-1" aria-labelledby="fahrerDeaktivierenModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+
+                            <div class="modal-content">
+                                <form asp-action="deactivate" class="d-flex flex-column p-3 gap-3">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="fahrerDeaktivierenModalLabel">Löschen</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Sind Sie, dass Sie den Eintrag wirklich deaktivieren wollen?</h5>
+                                        <input hidden min="0" class="form-control" value="@fahrerInfo.UserId" id="userId" name="userId">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                                        <button type="submit" class="btn btn-danger">Deaktivieren</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+
+        </div>
+
+
+
+
+    </div>
+
+</div>

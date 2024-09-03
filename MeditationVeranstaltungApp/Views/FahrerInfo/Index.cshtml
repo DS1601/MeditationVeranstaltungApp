@@ -23,6 +23,7 @@
                 <th>Telefon</th>
                 <th>Stadt</th>
                 <th>Land</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,12 @@
                         <td>@kontaktModel.Telefon</td>
                         <td>@kontaktModel.Stadt</td>
                         <td>@kontaktModel.Land</td>
+                        <td>
+                            <form asp-action="Details" method="get" asp-route-id="@kontaktModel.KontaktId">
+                                <button type="submit" class="btn btn-info">Anzeigen</button>
+                            </form>
+
+                        </td>
                     </tr>
                 }
             }

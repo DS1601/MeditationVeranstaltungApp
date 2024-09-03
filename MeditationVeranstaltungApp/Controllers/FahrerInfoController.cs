@@ -48,7 +48,7 @@ namespace MeditationVeranstaltungApp.Controllers
             string roleName = "DRIVER";
 
             var users = await _userManager.GetUsersInRoleAsync(roleName) as List<ApplicationUser>;
-            var ids = users.Select(user => user.Id);
+            var ids = users.Where(user => user.LockoutEnd == null || user.LockoutEnd < DateTime.Now).Select(user => user.Id);
 
             List<Kontakt> kontakts = context.Kontakts
             .Where(e => ids.Contains(e.UserId))
@@ -100,8 +100,38 @@ namespace MeditationVeranstaltungApp.Controllers
             {
                 return BadRequest();
             }
+        }
 
 
+        public async Task<IActionResult> Details(int id)
+        {
+            if (id == 0)
+            {
+                return View();
+            }
+
+            var kontaktAusDB = context.Kontakts
+                          .FirstOrDefault(k => k.Id == id);
+
+            if (kontaktAusDB == null)
+            {
+                return NotFound();
+            }
+
+            var kontaktModel = mapper.Map<KontaktModel>(kontaktAusDB);
+
+            ViewBag.FahrerInfo = kontaktModel;
+            return View();
+        }
+
+
+        public async Task<IActionResult> deactivate(string userId)
+        {
+            var lockoutEndDate = new DateTime(2999, 01, 01);
+            var user = context.Users.Where(user => user.Id == userId).FirstOrDefault();
+            await _userManager.SetLockoutEnabledAsync(user, true);
+            await _userManager.SetLockoutEndDateAsync(user, lockoutEndDate);
+            return RedirectToAction("Index");
         }
         private IUserEmailStore<ApplicationUser> GetEmailStore()
         {

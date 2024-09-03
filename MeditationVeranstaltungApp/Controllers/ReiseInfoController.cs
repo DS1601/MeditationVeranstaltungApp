@@ -189,7 +189,7 @@ namespace MeditationVeranstaltungApp.Controllers
             string roleName = "DRIVER";
 
             var users = await userManager.GetUsersInRoleAsync(roleName) as List<ApplicationUser>;
-            var ids = users.Select(user => user.Id);
+            var ids = users.Where(user => user.LockoutEnd == null || user.LockoutEnd < DateTime.Now).Select(user => user.Id);
 
             List<Kontakt> kontakts = context.Kontakts
             .Where(e => ids.Contains(e.UserId))
