@@ -132,6 +132,13 @@ namespace MeditationVeranstaltungApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Loeschen(int id)
+        {
+            context.Remove(context.ReiseInfos.Single(reiseInfo => reiseInfo.Id == id));
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> FahrerZuweisenSubmit(int id, string FahrerId)
         {
             var reiseInfoAusDB = context.ReiseInfos.FirstOrDefault(r => r.Id == id);
