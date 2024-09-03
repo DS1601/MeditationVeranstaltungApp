@@ -18,9 +18,11 @@ namespace MeditationVeranstaltungApp.Models
         public DateOnly AnkunftAm { get; set; }
         public TimeOnly AnkunftUm { get; set; }
         public string AnkunftOrt { get; set; }
+        public string Ankunftsmittelnummer { get; set; }
         public DateOnly AbfahrtAm { get; set; }
         public TimeOnly AbfahrtUm { get; set; }
         public string AbfahrtOrt { get; set; }
+        public string Abfahrtsmittelnummer { get; set; }
         public string? Notiz { get; set; }
         public DateTime? AbgesagtAm { get; set; }
         public string? AbsageGrund { get; set; }

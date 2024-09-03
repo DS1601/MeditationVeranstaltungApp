@@ -47,6 +47,12 @@
                         }
                     </select>
                 </div>
+
+                <div class="flex-fill">
+                    <label for="Ankunftsmittelnummer" class="form-label">Ankunftsmittelnummer:</label>
+                    <input class="form-control" asp-for="Ankunftsmittelnummer" id="Ankunftsmittelnummer" name="Ankunftsmittelnummer">
+                </div>
+
             </div>
 
 
@@ -73,6 +79,12 @@
                         }
                     </select>
                 </div>
+
+                <div class="flex-fill">
+                    <label for="Abfahrtsmittelnummer" class="form-label">Abfahrtsmittelnummer:</label>
+                    <input class="form-control" asp-for="Abfahrtsmittelnummer" id="Abfahrtsmittelnummer" name="Abfahrtsmittelnummer">
+                </div>
+
             </div>
 
             <div class="d-flex mt-1" style="gap:20px;">
@@ -84,60 +96,60 @@
         </div>
         @*
         <div class="d-flex p-3 flex-column" style="position: relative;border: 1px dotted black; border-radius: 5px;">
-            <h5 style="background-color: white;position: absolute; top: -15px; left: 45%;">&nbsp;&nbsp;Kontakt Info&nbsp;&nbsp;</h5>
+        <h5 style="background-color: white;position: absolute; top: -15px; left: 45%;">&nbsp;&nbsp;Kontakt Info&nbsp;&nbsp;</h5>
 
-            <div class="d-flex flex-fill mt-1" style="gap:20px;">
-                <div class="flex-fill">
-                    <label for="Anrede" class="form-label">Anrede:</label>
-                    <select class="form-select" asp-for="Anrede" id="Anrede" name="Anrede">
-                        <option>Herr</option>
-                        <option>Frau</option>
-                        <option>--</option>
-                    </select>
-                </div>
-                <div class="flex-fill">
-                    <label for="Vorname" class="form-label">Vorname:</label>
-                    <input type="text" class="form-control" asp-for="Vorname" id="Vorname" name="Vorname">
-                </div>
-                <div class="flex-fill">
-                    <label for="Nachname" class="form-label">Nachname:</label>
-                    <input type="text" class="form-control" asp-for="Nachname" id="Nachname" name="Nachname">
-                </div>
+        <div class="d-flex flex-fill mt-1" style="gap:20px;">
+        <div class="flex-fill">
+        <label for="Anrede" class="form-label">Anrede:</label>
+        <select class="form-select" asp-for="Anrede" id="Anrede" name="Anrede">
+        <option>Herr</option>
+        <option>Frau</option>
+        <option>--</option>
+        </select>
+        </div>
+        <div class="flex-fill">
+        <label for="Vorname" class="form-label">Vorname:</label>
+        <input type="text" class="form-control" asp-for="Vorname" id="Vorname" name="Vorname">
+        </div>
+        <div class="flex-fill">
+        <label for="Nachname" class="form-label">Nachname:</label>
+        <input type="text" class="form-control" asp-for="Nachname" id="Nachname" name="Nachname">
+        </div>
 
-                <div class="flex-fill">
-                    <label for="Geschlecht" class="form-label">Geschlecht:</label>
-                    <select class="form-select" asp-for="Geschlecht" id="Geschlecht" name="Geschlecht">
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Others</option>
-                    </select>
-                </div>
+        <div class="flex-fill">
+        <label for="Geschlecht" class="form-label">Geschlecht:</label>
+        <select class="form-select" asp-for="Geschlecht" id="Geschlecht" name="Geschlecht">
+        <option>Male</option>
+        <option>Female</option>
+        <option>Others</option>
+        </select>
+        </div>
 
-            </div>
-            <div class="d-flex mt-1" style="gap:20px;">
-                <div class="flex-fill">
-                    <label for="Email" class="form-label">Email:</label>
-                    <input type="Email" class="form-control" asp-for="Email" id="Email" name="Email">
-                </div>
+        </div>
+        <div class="d-flex mt-1" style="gap:20px;">
+        <div class="flex-fill">
+        <label for="Email" class="form-label">Email:</label>
+        <input type="Email" class="form-control" asp-for="Email" id="Email" name="Email">
+        </div>
 
-                <div class="flex-fill">
-                    <label for="Telefon" class="form-label">Telefon:</label>
-                    <input type="tel" class="form-control" asp-for="Telefon" id="Telefon" name="Telefon">
-                </div>
-            </div>
+        <div class="flex-fill">
+        <label for="Telefon" class="form-label">Telefon:</label>
+        <input type="tel" class="form-control" asp-for="Telefon" id="Telefon" name="Telefon">
+        </div>
+        </div>
 
-            <div class="d-flex mt-1" style="gap:20px;">
-                <div class="flex-fill">
-                    <label for="Stadt" class="form-label">Stadt:</label>
-                    <input type="text" class="form-control" asp-for="Stadt" id="Stadt" name="Stadt">
-                </div>
+        <div class="d-flex mt-1" style="gap:20px;">
+        <div class="flex-fill">
+        <label for="Stadt" class="form-label">Stadt:</label>
+        <input type="text" class="form-control" asp-for="Stadt" id="Stadt" name="Stadt">
+        </div>
 
-                <div class="flex-fill">
-                    <label for="Land" class="form-label">Land:</label>
-                    <input type="text" class="form-control" asp-for="Land" id="Land" name="Land">
-                </div>
+        <div class="flex-fill">
+        <label for="Land" class="form-label">Land:</label>
+        <input type="text" class="form-control" asp-for="Land" id="Land" name="Land">
+        </div>
 
-            </div>
+        </div>
         </div>
         *@
         <div class="d-flex p-3 justify-content-between">

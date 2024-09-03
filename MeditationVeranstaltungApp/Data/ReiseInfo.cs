@@ -8,7 +8,7 @@ namespace MeditationVeranstaltungApp.Data
     {
         public ReiseInfo()
         {
-           
+
         }
         public int Id { get; set; }
         public string Veranstalltung { get; set; }
@@ -16,8 +16,10 @@ namespace MeditationVeranstaltungApp.Data
         public int AnzahlFrauen { get; set; }
         public DateTime AnkunftAm { get; set; }
         public string AnkunftOrt { get; set; }
+        public string Ankunftsmittelnummer { get; set; }
         public DateTime AbfahrtAm { get; set; }
         public string AbfahrtOrt { get; set; }
+        public string Abfahrtsmittelnummer { get; set; }
         public string? Notiz { get; set; }
         public DateTime? AbgesagtAm { get; set; }
         public string? AbsageGrund { get; set; }

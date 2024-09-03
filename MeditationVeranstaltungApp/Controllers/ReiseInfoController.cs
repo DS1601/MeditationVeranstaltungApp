@@ -95,8 +95,10 @@ namespace MeditationVeranstaltungApp.Controllers
                 reiseInfo.AnzahlFrauen = reiseInfoCreateEditModel.AnzahlFrauen;
                 reiseInfo.AnkunftAm = reiseInfoCreateEditModel.AnkunftAm.ToDateTime(reiseInfoCreateEditModel.AnkunftUm);
                 reiseInfo.AnkunftOrt = reiseInfoCreateEditModel.AnkunftOrt;
+                reiseInfo.Ankunftsmittelnummer = reiseInfoCreateEditModel.Ankunftsmittelnummer;
                 reiseInfo.AbfahrtAm = reiseInfoCreateEditModel.AbfahrtAm.ToDateTime(reiseInfoCreateEditModel.AbfahrtUm);
                 reiseInfo.AbfahrtOrt = reiseInfoCreateEditModel.AbfahrtOrt;
+                reiseInfo.Abfahrtsmittelnummer = reiseInfoCreateEditModel.Abfahrtsmittelnummer;
                 reiseInfo.Notiz = reiseInfoCreateEditModel.Notiz;
 
 
